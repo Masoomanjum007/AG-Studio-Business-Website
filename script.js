@@ -136,24 +136,22 @@
   };
 
   /* ======================== MAGNETIC CURSOR ======================== */
+  const magneticQuickTo = new WeakMap();
+
   const Cursor = {
     el: $('#cursor'),
     trail: $('#cursorTrail'),
-    // Raw mouse position
     mouse: { x: 0, y: 0 },
-    // Rendered positions
     pos: { x: 0, y: 0 },
     trailPos: { x: 0, y: 0 },
-    // Magnetic target (element center when snapped)
     magneticTarget: null,
-    magneticStrength: 0.35,
+    magneticStrength: 0.42,
     isMagnetic: false,
     rafId: null,
 
     init() {
       if (IS_TOUCH || !this.el) return;
 
-      // Track raw mouse at full speed
       document.addEventListener('mousemove', (e) => {
         this.mouse.x = e.clientX;
         this.mouse.y = e.clientY;
@@ -162,8 +160,7 @@
       document.addEventListener('mousedown', () => this.el.classList.add('cursor--click'));
       document.addEventListener('mouseup', () => this.el.classList.remove('cursor--click'));
 
-      // Generic hover for non-magnetic interactives
-      $$('a:not([data-magnetic]), input, textarea, select').forEach(el => {
+      $$('a:not([data-magnetic]), input, textarea, select, button:not([data-magnetic])').forEach(el => {
         el.addEventListener('mouseenter', () => {
           if (!this.isMagnetic) this.el.classList.add('cursor--hover');
         });
@@ -176,18 +173,32 @@
       this.render();
     },
 
+    getMagneticTweeners(el) {
+      if (typeof gsap === 'undefined' || !gsap.quickTo) return null;
+      let tweens = magneticQuickTo.get(el);
+      if (!tweens) {
+        tweens = {
+          xTo: gsap.quickTo(el, 'x', { duration: 0.45, ease: 'power3.out' }),
+          yTo: gsap.quickTo(el, 'y', { duration: 0.45, ease: 'power3.out' })
+        };
+        magneticQuickTo.set(el, tweens);
+      }
+      return tweens;
+    },
+
     initMagnetics() {
       const magnets = $$('[data-magnetic]');
       magnets.forEach(el => {
         el.addEventListener('mouseenter', () => {
           this.isMagnetic = true;
           this.magneticTarget = el;
+          el.classList.add('is-magnetic-target');
           this.el.classList.add('cursor--magnetic');
           this.el.classList.remove('cursor--hover');
         });
 
         el.addEventListener('mousemove', (e) => {
-          if (!this.isMagnetic) return;
+          if (!this.isMagnetic || this.magneticTarget !== el) return;
           const rect = el.getBoundingClientRect();
           const centerX = rect.left + rect.width / 2;
           const centerY = rect.top + rect.height / 2;
@@ -197,73 +208,70 @@
             ? parseFloat(el.dataset.magneticStrength)
             : this.magneticStrength;
 
-          // Pull the element toward cursor
-          if (typeof gsap !== 'undefined') {
-            gsap.to(el, {
-              x: deltaX * strength,
-              y: deltaY * strength,
-              duration: 0.3,
-              ease: 'power3.out',
-              overwrite: 'auto'
-            });
+          const tweens = this.getMagneticTweeners(el);
+          if (tweens) {
+            tweens.xTo(deltaX * strength);
+            tweens.yTo(deltaY * strength);
+          } else {
+            el.style.transform = `translate3d(${deltaX * strength}px, ${deltaY * strength}px, 0)`;
           }
         });
 
         el.addEventListener('mouseleave', () => {
           this.isMagnetic = false;
           this.magneticTarget = null;
+          el.classList.remove('is-magnetic-target');
           this.el.classList.remove('cursor--magnetic');
 
-          // Spring the element back
           if (typeof gsap !== 'undefined') {
             gsap.to(el, {
               x: 0,
               y: 0,
-              duration: 0.7,
-              ease: 'elastic.out(1.2, 0.4)',
+              duration: 0.75,
+              ease: 'elastic.out(1.15, 0.35)',
               overwrite: 'auto'
             });
+          } else {
+            el.style.transform = '';
           }
         });
       });
     },
 
+    magneticPullForPoint(px, py) {
+      if (!this.isMagnetic || !this.magneticTarget) return { x: px, y: py };
+      const rect = this.magneticTarget.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const dx = centerX - px;
+      const dy = centerY - py;
+      const dist = Math.hypot(dx, dy) || 1;
+      const radius = Math.max(rect.width, rect.height) * 0.65;
+      const falloff = clamp(1 - dist / radius, 0, 1);
+      const pull = 0.12 + falloff * 0.58;
+      return {
+        x: lerp(px, centerX, pull),
+        y: lerp(py, centerY, pull)
+      };
+    },
+
     render() {
-      // Cursor ring: instant position for zero lag
-      this.pos.x = lerp(this.pos.x, this.mouse.x, 0.55);
-      this.pos.y = lerp(this.pos.y, this.mouse.y, 0.55);
+      this.pos.x = lerp(this.pos.x, this.mouse.x, 0.52);
+      this.pos.y = lerp(this.pos.y, this.mouse.y, 0.52);
 
-      // Trail: softer follow for organic feel
-      this.trailPos.x = lerp(this.trailPos.x, this.mouse.x, 0.15);
-      this.trailPos.y = lerp(this.trailPos.y, this.mouse.y, 0.15);
+      const ringTarget = this.magneticPullForPoint(this.pos.x, this.pos.y);
+      const trailTarget = this.magneticPullForPoint(this.mouse.x, this.mouse.y);
 
-      // When magnetically locked, pull cursor ring toward element center
-      let renderX = this.pos.x;
-      let renderY = this.pos.y;
+      this.trailPos.x = lerp(this.trailPos.x, trailTarget.x, 0.18);
+      this.trailPos.y = lerp(this.trailPos.y, trailTarget.y, 0.18);
 
-      if (this.isMagnetic && this.magneticTarget) {
-        const rect = this.magneticTarget.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        // Blend cursor position toward element center
-        renderX = lerp(this.pos.x, centerX, 0.25);
-        renderY = lerp(this.pos.y, centerY, 0.25);
-      }
-
-      this.el.style.transform = `translate3d(${renderX}px, ${renderY}px, 0) translate(-50%, -50%)`;
+      this.el.style.transform = `translate3d(${ringTarget.x}px, ${ringTarget.y}px, 0) translate(-50%, -50%)`;
 
       if (this.trail) {
         this.trail.style.transform = `translate3d(${this.trailPos.x}px, ${this.trailPos.y}px, 0) translate(-50%, -50%)`;
       }
 
       this.rafId = requestAnimationFrame(() => this.render());
-    }
-  };
-
-  /* ======================== MAGNETIC EFFECT (DEPRECATED — integrated into Cursor) ======================== */
-  const MagneticEffect = {
-    init() {
-      // Magnetic behavior is now handled by Cursor.initMagnetics()
     }
   };
 
@@ -275,6 +283,7 @@
     particles: null,
     mouse: { x: 0, y: 0 },
     rafId: null,
+    resizeRaf: null,
 
     init() {
       if (IS_MOBILE || REDUCED_MOTION || typeof THREE === 'undefined') return;
@@ -336,7 +345,20 @@
           });
         }, { passive: true });
 
-        window.addEventListener('resize', () => this.onResize());
+        window.addEventListener('resize', () => {
+          if (this.resizeRaf) return;
+          this.resizeRaf = requestAnimationFrame(() => {
+            this.resizeRaf = null;
+            this.onResize();
+          });
+        });
+
+        document.addEventListener('visibilitychange', () => {
+          if (!document.hidden && this.particles && this.rafId == null) {
+            this.animate();
+          }
+        });
+
         this.animate();
       } catch (e) {
         console.warn('Three.js init failed:', e);
@@ -346,10 +368,14 @@
     animate() {
       if (!this.particles) return;
 
+      if (document.hidden) {
+        this.rafId = null;
+        return;
+      }
+
       this.particles.rotation.x += 0.0003;
       this.particles.rotation.y += 0.0005;
 
-      // Cursor-based interaction — move camera slightly
       this.camera.position.x = lerp(this.camera.position.x, this.mouse.x * 5, 0.02);
       this.camera.position.y = lerp(this.camera.position.y, this.mouse.y * 5, 0.02);
       this.camera.lookAt(this.scene.position);
@@ -471,8 +497,8 @@
     update() {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (scrollTop / docHeight) * 100;
-      this.bar.style.width = progress + '%';
+      const ratio = docHeight > 0 ? scrollTop / docHeight : 0;
+      this.bar.style.transform = `scaleX(${clamp(ratio, 0, 1)})`;
     }
   };
 
@@ -986,16 +1012,12 @@
 
     // Called after preloader completes
     onReady() {
-      console.log('App ready — revealing content');
-      
-      // Reveal main content softly
       const main = $('#main');
       if (main) main.classList.add('page-loaded');
 
       TextSplitting.init();
       SmoothScroll.init();
       Cursor.init();
-      MagneticEffect.init();
       HeroBackground3D.init();
       ScrollAnimations.init();
       TiltEffect.init();
