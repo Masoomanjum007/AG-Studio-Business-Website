@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A premium, interactive cursor-based website with advanced animations, glassmorphism UI, and futuristic design." />
+  <meta name="keywords" content="interactive, cursor, animations, premium, modern, web design" />
+  <meta name="author" content="AG Studio" />
+  <title>AG Studio — Interactive Premium Experience</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Splitting.js CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css" />
+  <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting-cells.css" />
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◆</text></svg>" />
+</head>
+<body>
+
+  <!-- ==================== PRELOADER ==================== -->
+  <div id="preloader" class="preloader" aria-label="Loading">
+    <div class="preloader__inner">
+      <div class="preloader__logo">
+        <span class="preloader__logo-text">AG</span>
+        <span class="preloader__logo-sub">STUDIO</span>
+      </div>
+      <div class="preloader__bar">
+        <div class="preloader__bar-fill"></div>
+      </div>
+      <div class="preloader__counter">0%</div>
+    </div>
+  </div>
+
+  <!-- ==================== CUSTOM CURSOR ==================== -->
+  <div class="cursor" id="cursor" aria-hidden="true">
+    <div class="cursor__circle"></div>
+  </div>
+  <div class="cursor-trail" id="cursorTrail" aria-hidden="true"></div>
+
+  <!-- ==================== SCROLL PROGRESS BAR ==================== -->
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true">
+    <div class="scroll-progress__bar"></div>
+  </div>
+
+  <!-- ==================== MAIN WRAPPER ==================== -->
+  <div id="main">
+    <!-- ==================== NAVIGATION ==================== -->
+  <nav class="nav" id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav__container">
+      <a href="#hero" class="nav__logo" aria-label="AG Studio Home">
+        <span class="nav__logo-mark">◆</span>
+        <span class="nav__logo-text">AG<span class="nav__logo-accent">Studio</span></span>
+      </a>
+
+      <ul class="nav__links" id="navLinks" role="menubar">
+        <li role="none"><a href="#hero" class="nav__link active" role="menuitem" data-magnetic>Home</a></li>
+        <li role="none"><a href="#about" class="nav__link" role="menuitem" data-magnetic>About</a></li>
+        <li role="none"><a href="#services" class="nav__link" role="menuitem" data-magnetic>Services</a></li>
+        <li role="none"><a href="#projects" class="nav__link" role="menuitem" data-magnetic>Projects</a></li>
+        <li role="none"><a href="#pricing" class="nav__link" role="menuitem" data-magnetic>Pricing</a></li>
+        <li role="none"><a href="#team" class="nav__link" role="menuitem" data-magnetic>Team</a></li>
+        <li role="none"><a href="#blog" class="nav__link" role="menuitem" data-magnetic>Blog</a></li>
+        <li role="none"><a href="#contact" class="nav__link" role="menuitem" data-magnetic>Contact</a></li>
+      </ul>
+
+      <div class="nav__actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" data-magnetic>
+          <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+          <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+        <button class="nav__burger" id="navBurger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==================== MOBILE MENU ==================== -->
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Mobile menu">
+    <ul class="mobile-menu__links">
+      <li><a href="#hero" class="mobile-menu__link">Home</a></li>
+      <li><a href="#about" class="mobile-menu__link">About</a></li>
+      <li><a href="#services" class="mobile-menu__link">Services</a></li>
+      <li><a href="#projects" class="mobile-menu__link">Projects</a></li>
+      <li><a href="#pricing" class="mobile-menu__link">Pricing</a></li>
+      <li><a href="#team" class="mobile-menu__link">Team</a></li>
+      <li><a href="#blog" class="mobile-menu__link">Blog</a></li>
+      <li><a href="#contact" class="mobile-menu__link">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main data-barba="wrapper">
+    <div data-barba="container" data-barba-namespace="home">
+
+      <!-- ========== HERO SECTION ========== -->
+      <section class="hero" id="hero" aria-label="Hero section">
+        <div class="hero__bg" id="heroBackground"></div>
+        <div class="hero__overlay"></div>
+        <div class="hero__particles" id="heroParticles"></div>
+
+        <div class="hero__content">
+          <div class="hero__badge" data-animate="fade-up">
+            <span class="hero__badge-dot"></span>
+            Crafting Digital Experiences
+          </div>
+          <h1 class="hero__title" data-splitting data-animate="split-up">
+            We Build<br />
+            <span class="hero__title-accent">Interactive</span><br />
+            Experiences
+          </h1>
+          <p class="hero__subtitle" data-animate="fade-up" data-delay="0.4">
+            Premium digital solutions that push boundaries. We craft immersive web experiences that captivate, engage, and convert.
+          </p>
+          <div class="hero__cta" data-animate="fade-up" data-delay="0.6">
+            <a href="#projects" class="btn btn--primary" data-magnetic>
+              <span class="btn__text">View Our Work</span>
+              <span class="btn__ripple"></span>
+            </a>
+            <a href="#about" class="btn btn--outline" data-magnetic>
+              <span class="btn__text">Learn More</span>
+              <span class="btn__ripple"></span>
+            </a>
+          </div>
+          <div class="hero__scroll" data-animate="fade-up" data-delay="0.8">
+            <div class="hero__scroll-mouse">
+              <div class="hero__scroll-wheel"></div>
+            </div>
+            <span>Scroll to explore</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== ABOUT SECTION ========== -->
+      <section class="about section" id="about" aria-label="About us">
+        <div class="container">
+          <div class="section__header" data-animate="fade-up">
+            <span class="section__tag">Who We Are</span>
+            <h2 class="section__title" data-splitting>We Are The Leaders<br />In <span class="text-accent">Construction</span></h2>
+            <p class="section__desc">With over a decade of experience, we deliver world-class architectural solutions and digital experiences that transform spaces and inspire people.</p>
+          </div>
+          <div class="about__grid">
+            <div class="about__image-wrap" data-animate="fade-right">
+              <div class="about__image skeleton-loader">
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&auto=format"
+                     alt="Modern architecture building"
+                     loading="lazy"
+                     onload="this.parentElement.classList.remove('skeleton-loader')" />
+              </div>
+              <div class="about__image-stats glass-card">
+                <div class="about__stat">
+                  <span class="about__stat-number" data-count="250">0</span>
+                  <span class="about__stat-label">Projects Done</span>
+                </div>
+                <div class="about__stat">
+                  <span class="about__stat-number" data-count="15">0</span>
+                  <span class="about__stat-label">Years Experience</span>
+                </div>
+              </div>
+            </div>
+            <div class="about__content" data-animate="fade-left">
+              <h3 class="about__heading">Transforming Visions Into Reality</h3>
+              <p class="about__text">We combine cutting-edge technology with innovative design to create spaces and experiences that are both functional and beautiful. Our team of expert architects and developers work together to deliver excellence.</p>
+              <ul class="about__features">
+                <li class="about__feature" data-animate="fade-up" data-delay="0.1">
+                  <span class="about__feature-icon">◆</span>
+                  <div>
+                    <strong>Innovation First</strong>
+                    <p>Pushing boundaries with creative solutions</p>
+                  </div>
+                </li>
+                <li class="about__feature" data-animate="fade-up" data-delay="0.2">
+                  <span class="about__feature-icon">◆</span>
+                  <div>
+                    <strong>Quality Assured</strong>
+                    <p>Every project meets our high standards</p>
+                  </div>
+                </li>
+                <li class="about__feature" data-animate="fade-up" data-delay="0.3">
+                  <span class="about__feature-icon">◆</span>
+                  <div>
+                    <strong>Client Focused</strong>
+                    <p>Your vision drives our work</p>
+                  </div>
+                </li>
+              </ul>
+              <a href="#services" class="btn btn--primary" data-magnetic>
+                <span class="btn__text">Our Services</span>
+                <span class="btn__ripple"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== SERVICES SECTION ========== -->
+      <section class="services section" id="services" aria-label="Our services">
+        <div class="container">
+          <div class="section__header" data-animate="fade-up">
+            <span class="section__tag">What We Do</span>
+            <h2 class="section__title" data-splitting>Our <span class="text-accent">Services</span></h2>
+            <p class="section__desc">We offer comprehensive solutions that cover every aspect of modern construction and digital experience design.</p>
+          </div>
+          <div class="services__grid">
+            <div class="service-card glass-card" data-tilt data-animate="fade-up" data-delay="0.1">
+              <div class="service-card__icon">
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="8" y="16" width="48" height="40" rx="2"/><path d="M20 16V8h24v8"/><path d="M8 28h48"/>
+                </svg>
+              </div>
+              <h3 class="service-card__title">Architecture Design</h3>
+              <p class="service-card__desc">Creating innovative architectural designs that blend aesthetics with functionality for modern living spaces.</p>
+              <a href="#" class="service-card__link" data-magnetic>Learn More →</a>
+            </div>
+            <div class="service-card glass-card" data-tilt data-animate="fade-up" data-delay="0.2">
+              <div class="service-card__icon">
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M32 4L4 20v24l28 16 28-16V20L32 4z"/><path d="M4 20l28 16 28-16"/><path d="M32 60V36"/>
+                </svg>
+              </div>
+              <h3 class="service-card__title">3D Visualization</h3>
+              <p class="service-card__desc">Photo-realistic 3D renders and virtual walkthroughs that bring your project to life before construction.</p>
+              <a href="#" class="service-card__link" data-magnetic>Learn More →</a>
+            </div>
+            <div class="service-card glass-card" data-tilt data-animate="fade-up" data-delay="0.3">
+              <div class="service-card__icon">
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="4" y="4" width="56" height="56" rx="4"/><path d="M4 20h56"/><circle cx="14" cy="12" r="3"/><circle cx="24" cy="12" r="3"/><circle cx="34" cy="12" r="3"/>
+                </svg>
+              </div>
+              <h3 class="service-card__title">Web Development</h3>
+              <p class="service-card__desc">Building high-performance, interactive websites and applications with cutting-edge technologies.</p>
+              <a href="#" class="service-card__link" data-magnetic>Learn More →</a>
+            </div>
+            <div class="service-card glass-card" data-tilt data-animate="fade-up" data-delay="0.4">
+              <div class="service-card__icon">
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="32" cy="32" r="28"/><path d="M32 4c-8 8-12 18-12 28s4 20 12 28c8-8 12-18 12-28S40 12 32 4z"/><path d="M4 32h56"/>
+                </svg>
+              </div>
+              <h3 class="service-card__title">Interior Design</h3>
+              <p class="service-card__desc">Transforming interior spaces with elegant design solutions that reflect your personality and lifestyle.</p>
+              <a href="#" class="service-card__link" data-magnetic>Learn More →</a>
+            </div>
+            <div class="service-card glass-card" data-tilt data-animate="fade-up" data-delay="0.5">
+              <div class="service-card__icon">
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M8 56l16-20 12 8 12-16 8 12"/><rect x="4" y="4" width="56" height="56" rx="4"/>
+                </svg>
+              </div>
+              <h3 class="service-card__title">Project Management</h3>
+              <p class="service-card__desc">End-to-end project management ensuring timely delivery, quality control, and budget optimization.</p>
+              <a href="#" class="service-card__link" data-magnetic>Learn More →</a>
+            </div>
+            <div class="service-card glass-card" data-tilt data-animate="fade-up" data-delay="0.6">
+              <div class="service-card__icon">
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M32 4v56M4 32h56"/><circle cx="32" cy="32" r="12"/><circle cx="32" cy="32" r="28"/>
+                </svg>
+              </div>
+              <h3 class="service-card__title">Consulting</h3>
+              <p class="service-card__desc">Expert consultation services to guide your construction and design projects from concept to completion.</p>
+              <a href="#" class="service-card__link" data-magnetic>Learn More →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== MARQUEE / CTA BANNER ========== -->
+      <section class="marquee-section" aria-label="Call to action">
+        <div class="marquee" data-animate="fade-up">
+          <div class="marquee__track">
+            <span class="marquee__item">The Power to Make Anything</span>
+            <span class="marquee__sep">◆</span>
+            <span class="marquee__item">Premium Design</span>
+            <span class="marquee__sep">◆</span>
+            <span class="marquee__item">Interactive Experiences</span>
+            <span class="marquee__sep">◆</span>
+            <span class="marquee__item">The Power to Make Anything</span>
+            <span class="marquee__sep">◆</span>
+            <span class="marquee__item">Premium Design</span>
+            <span class="marquee__sep">◆</span>
+            <span class="marquee__item">Interactive Experiences</span>
+            <span class="marquee__sep">◆</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== PROJECTS SECTION ========== -->
+      <section class="projects section" id="projects" aria-label="Our projects">
+        <div class="container">
+          <div class="section__header" data-animate="fade-up">
+            <span class="section__tag">Portfolio</span>
+            <h2 class="section__title" data-splitting>Our Best <span class="text-accent">Projects</span></h2>
+            <p class="section__desc">Explore our portfolio of award-winning projects that showcase our expertise and creativity.</p>
+          </div>
+          <div class="projects__filters" data-animate="fade-up">
+            <button class="projects__filter active" data-filter="all" data-magnetic>All</button>
+            <button class="projects__filter" data-filter="architecture" data-magnetic>Architecture</button>
+            <button class="projects__filter" data-filter="interior" data-magnetic>Interior</button>
+            <button class="projects__filter" data-filter="commercial" data-magnetic>Commercial</button>
+          </div>
+          <div class="projects__grid">
+            <div class="project-card" data-category="architecture" data-animate="fade-up" data-delay="0.1">
+              <div class="project-card__image skeleton-loader">
+                <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80&auto=format"
+                     alt="Modern residential tower" loading="lazy"
+                     onload="this.parentElement.classList.remove('skeleton-loader')" />
+              </div>
+              <div class="project-card__overlay">
+                <span class="project-card__cat">Architecture</span>
+                <h3 class="project-card__title">Skyline Tower</h3>
+                <p class="project-card__desc">Modern residential complex with panoramic views</p>
+              </div>
+            </div>
+            <div class="project-card" data-category="interior" data-animate="fade-up" data-delay="0.2">
+              <div class="project-card__image skeleton-loader">
+                <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&q=80&auto=format"
+                     alt="Luxury interior design" loading="lazy"
+                     onload="this.parentElement.classList.remove('skeleton-loader')" />
+              </div>
+              <div class="project-card__overlay">
+                <span class="project-card__cat">Interior</span>
+                <h3 class="project-card__title">Luxury Penthouse</h3>
+                <p class="project-card__desc">Elegant living spaces with premium finishes</p>
+              </div>
+            </div>
+            <div class="project-card" data-category="commercial" data-animate="fade-up" data-delay="0.3">
+              <div class="project-card__image skeleton-loader">
+                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80&auto=format"
+                     alt="Corporate office space" loading="lazy"
+                     onload="this.parentElement.classList.remove('skeleton-loader')" />
+              </div>
+              <div class="project-card__overlay">
+                <span class="project-card__cat">Commercial</span>
+                <h3 class="project-card__title">Tech Campus</h3>
+                <p class="project-card__desc">Innovation hub for next-gen companies</p>
+              </div>
+            </div>
+            <div class="project-card" data-category="architecture" data-animate="fade-up" data-delay="0.4">
+              <div class="project-card__image skeleton-loader">
+                <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=600&q=80&auto=format"
+                     alt="Modern glass building" loading="lazy"
+                     onload="this.parentElement.classList.remove('skeleton-loader')" />
+              </div>
+              <div class="project-card__overlay">
+                <span class="project-card__cat">Architecture</span>
+                <h3 class="project-card__title">Crystal Pavilion</h3>
+                <p class="project-card__desc">Award-winning glass and steel structure</p>
+              </div>
+            </div>
+            <div class="project-card" data-category="interior" data-animate="fade-up" data-delay="0.5">
+              <div class="project-card__image skeleton-loader">
+                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80&auto=format"
+                     alt="Modern villa interior" loading="lazy"
+                     onload="this.parentElement.classList.remove('skeleton-loader')" />
+              </div>
+              <div class="project-card__overlay">
+                <span class="project-card__cat">Interior</span>
+                <h3 class="project-card__title">Modern Villa</h3>
+                <p class="project-card__desc">Contemporary villa with seamless design flow</p>
+              </div>
+            </div>
+            <div class="project-card" data-category="commercial" data-animate="fade-up" data-delay="0.6">
+              <div class="project-card__image skeleton-loader">
+                <img src="https://images.unsplash.com/photo-1577495508048-b635879837f1?w=600&q=80&auto=format"
+                     alt="Shopping mall" loading="lazy"
+                     onload="this.parentElement.classList.remove('skeleton-loader')" />
+              </div>
+              <div class="project-card__overlay">
+                <span class="project-card__cat">Commercial</span>
+                <h3 class="project-card__title">Urban Mall</h3>
+                <p class="project-card__desc">Next-generation retail and entertainment space</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== VIDEO SECTION ========== -->
+      <section class="video-section section" id="video" aria-label="Video showcase">
+        <div class="video-section__bg skeleton-loader">
+          <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1400&q=80&auto=format"
+               alt="Construction site" loading="lazy"
+               onload="this.parentElement.classList.remove('skeleton-loader')" />
+        </div>
+        <div class="video-section__overlay"></div>
+        <div class="video-section__content" data-animate="fade-up">
+          <h2 class="video-section__title" data-splitting>The Power to<br /><span class="text-accent">Make Anything</span></h2>
+          <p class="video-section__desc">Watch how we transform visions into breathtaking realities through innovation and craftsmanship.</p>
+          <button class="video-section__play" id="playBtn" aria-label="Play video" data-magnetic>
+            <svg viewBox="0 0 64 64" fill="currentColor">
+              <polygon points="24,14 24,50 50,32" />
+            </svg>
+            <span class="video-section__play-ripple"></span>
+            <span class="video-section__play-ripple"></span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Video Modal -->
+      <div class="video-modal" id="videoModal" role="dialog" aria-label="Video player" aria-hidden="true">
+        <div class="video-modal__overlay"></div>
+        <div class="video-modal__container">
+          <button class="video-modal__close" id="videoClose" aria-label="Close video">✕</button>
+          <div class="video-modal__wrapper">
+            <iframe id="videoFrame" src="" title="Project showcase video" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== PRICING SECTION ========== -->
+      <section class="pricing section" id="pricing" aria-label="Pricing plans">
+        <div class="container">
+          <div class="section__header" data-animate="fade-up">
+            <span class="section__tag">Plans</span>
+            <h2 class="section__title" data-splitting><span class="text-accent">Pricing</span> Table</h2>
+            <p class="section__desc">Choose the perfect plan that fits your project needs and budget.</p>
+          </div>
+          <div class="pricing__toggle" data-animate="fade-up">
+            <span class="pricing__toggle-label" data-active>Monthly</span>
+            <button class="pricing__toggle-switch" id="pricingToggle" aria-label="Toggle monthly/yearly pricing">
+              <span class="pricing__toggle-knob"></span>
+            </button>
+            <span class="pricing__toggle-label">Yearly <span class="pricing__badge">Save 20%</span></span>
+          </div>
+          <div class="pricing__grid">
+            <div class="pricing-card glass-card" data-tilt data-animate="fade-up" data-delay="0.1">
+              <div class="pricing-card__header">
+                <span class="pricing-card__plan">Basic</span>
+                <div class="pricing-card__price">
+                  <span class="pricing-card__currency">$</span>
+                  <span class="pricing-card__amount" data-monthly="29" data-yearly="23">29</span>
+                  <span class="pricing-card__period">/mo</span>
+                </div>
+              </div>
+              <ul class="pricing-card__features">
+                <li class="pricing-card__feature"><span>✓</span> 5 Project Pages</li>
+                <li class="pricing-card__feature"><span>✓</span> Basic Analytics</li>
+                <li class="pricing-card__feature"><span>✓</span> Email Support</li>
+                <li class="pricing-card__feature pricing-card__feature--disabled"><span>✕</span> Custom Domains</li>
+                <li class="pricing-card__feature pricing-card__feature--disabled"><span>✕</span> Priority Support</li>
+              </ul>
+              <a href="#" class="btn btn--outline btn--full" data-magnetic>
+                <span class="btn__text">Get Started</span>
+                <span class="btn__ripple"></span>
+              </a>
+            </div>
+            <div class="pricing-card pricing-card--featured glass-card" data-tilt data-animate="fade-up" data-delay="0.2">
+              <div class="pricing-card__badge">Most Popular</div>
+              <div class="pricing-card__header">
+                <span class="pricing-card__plan">Professional</span>
+                <div class="pricing-card__price">
+                  <span class="pricing-card__currency">$</span>
+                  <span class="pricing-card__amount" data-monthly="59" data-yearly="47">59</span>
+                  <span class="pricing-card__period">/mo</span>
+                </div>
+              </div>
+              <ul class="pricing-card__features">
+                <li class="pricing-card__feature"><span>✓</span> Unlimited Pages</li>
+                <li class="pricing-card__feature"><span>✓</span> Advanced Analytics</li>
+                <li class="pricing-card__feature"><span>✓</span> Priority Support</li>
+                <li class="pricing-card__feature"><span>✓</span> Custom Domains</li>
+                <li class="pricing-card__feature pricing-card__feature--disabled"><span>✕</span> White Label</li>
+              </ul>
+              <a href="#" class="btn btn--primary btn--full" data-magnetic>
+                <span class="btn__text">Get Started</span>
+                <span class="btn__ripple"></span>
+              </a>
+            </div>
+            <div class="pricing-card glass-card" data-tilt data-animate="fade-up" data-delay="0.3">
+              <div class="pricing-card__header">
+                <span class="pricing-card__plan">Enterprise</span>
+                <div class="pricing-card__price">
+                  <span class="pricing-card__currency">$</span>
+                  <span class="pricing-card__amount" data-monthly="149" data-yearly="119">149</span>
+                  <span class="pricing-card__period">/mo</span>
+                </div>
+              </div>
+              <ul class="pricing-card__features">
+                <li class="pricing-card__feature"><span>✓</span> Everything in Pro</li>
+                <li class="pricing-card__feature"><span>✓</span> White Label</li>
+                <li class="pricing-card__feature"><span>✓</span> Dedicated Manager</li>
+                <li class="pricing-card__feature"><span>✓</span> SLA Guarantee</li>
+                <li class="pricing-card__feature"><span>✓</span> Custom Integrations</li>
+              </ul>
+              <a href="#" class="btn btn--outline btn--full" data-magnetic>
+                <span class="btn__text">Contact Sales</span>
+                <span class="btn__ripple"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== TEAM SECTION ========== -->
+      <section class="team section" id="team" aria-label="Our team">
+        <div class="container">
+          <div class="section__header" data-animate="fade-up">
+            <span class="section__tag">Our People</span>
+            <h2 class="section__title" data-splitting>Our <span class="text-accent">Team</span></h2>
+            <p class="section__desc">Meet the talented people behind our success.</p>
+          </div>
+          <div class="team__grid">
+            <div class="team-card" data-tilt data-animate="fade-up" data-delay="0.1">
+              <div class="team-card__image skeleton-loader">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80&auto=format"
+                     alt="James Mitchell - CEO" loading="lazy"
+                     onload="this.parentElement.classList.remove('skeleton-loader')" />
+              </div>
+              <div class="team-card__info">
+                <h3 class="team-card__name">James Mitchell</h3>
+                <span class="team-card__role">CEO & Founder</span>
+                <div class="team-card__socials">
+                  <a href="#" aria-label="LinkedIn" data-magnetic>in</a>
+                  <a href="#" aria-label="Twitter" data-magnetic>𝕏</a>
+                </div>
+              </div>
+            </div>
+            <div class="team-card" data-tilt data-animate="fade-up" data-delay="0.2">
+              <div class="team-card__image skeleton-loader">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80&auto=format"
+                     alt="Sarah Chen - Lead Architect" loading="lazy"
+                     onload="this.parentElement.classList.remove('skeleton-loader')" />
+              </div>
+              <div class="team-card__info">
+                <h3 class="team-card__name">Sarah Chen</h3>
+                <span class="team-card__role">Lead Architect</span>
+                <div class="team-card__socials">
+                  <a href="#" aria-label="LinkedIn" data-magnetic>in</a>
+                  <a href="#" aria-label="Twitter" data-magnetic>𝕏</a>
+                </div>
+              </div>
+            </div>
+            <div class="team-card" data-tilt data-animate="fade-up" data-delay="0.3">
+              <div class="team-card__image skeleton-loader">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80&auto=format"
+                     alt="David Park - Creative Director" loading="lazy"
+                     onload="this.parentElement.classList.remove('skeleton-loader')" />
+              </div>
+              <div class="team-card__info">
+                <h3 class="team-card__name">David Park</h3>
+                <span class="team-card__role">Creative Director</span>
+                <div class="team-card__socials">
+                  <a href="#" aria-label="LinkedIn" data-magnetic>in</a>
+                  <a href="#" aria-label="Twitter" data-magnetic>𝕏</a>
+                </div>
+              </div>
+            </div>
+            <div class="team-card" data-tilt data-animate="fade-up" data-delay="0.4">
+              <div class="team-card__image skeleton-loader">
+                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80&auto=format"
+                     alt="Emily Ross - Project Manager" loading="lazy"
+                     onload="this.parentElement.classList.remove('skeleton-loader')" />
+              </div>
+              <div class="team-card__info">
+                <h3 class="team-card__name">Emily Ross</h3>
+                <span class="team-card__role">Project Manager</span>
+                <div class="team-card__socials">
+                  <a href="#" aria-label="LinkedIn" data-magnetic>in</a>
+                  <a href="#" aria-label="Twitter" data-magnetic>𝕏</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== BLOG SECTION ========== -->
+      <section class="blog section" id="blog" aria-label="Blog articles">
+        <div class="container">
+          <div class="section__header" data-animate="fade-up">
+            <span class="section__tag">Latest News</span>
+            <h2 class="section__title" data-splitting>News & <span class="text-accent">Articles</span></h2>
+            <p class="section__desc">Stay updated with the latest trends and insights from the industry.</p>
+          </div>
+          <div class="blog__grid">
+            <article class="blog-card glass-card" data-tilt data-animate="fade-up" data-delay="0.1">
+              <div class="blog-card__image skeleton-loader">
+                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&q=80&auto=format"
+                     alt="Architecture trends" loading="lazy"
+                     onload="this.parentElement.classList.remove('skeleton-loader')" />
+                <span class="blog-card__date">Mar 28, 2026</span>
+              </div>
+              <div class="blog-card__content">
+                <span class="blog-card__tag">Architecture</span>
+                <h3 class="blog-card__title">How To Build Remarkable Architecture in 2026</h3>
+                <p class="blog-card__excerpt">Discover the latest trends shaping modern architecture and how to incorporate them into your projects...</p>
+                <a href="#" class="blog-card__link" data-magnetic>Read More →</a>
+              </div>
+            </article>
+            <article class="blog-card glass-card" data-tilt data-animate="fade-up" data-delay="0.2">
+              <div class="blog-card__image skeleton-loader">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&q=80&auto=format"
+                     alt="Design process" loading="lazy"
+                     onload="this.parentElement.classList.remove('skeleton-loader')" />
+                <span class="blog-card__date">Mar 22, 2026</span>
+              </div>
+              <div class="blog-card__content">
+                <span class="blog-card__tag">Design</span>
+                <h3 class="blog-card__title">Effective Tool For Better Design Process</h3>
+                <p class="blog-card__excerpt">Learn about the essential tools and methodologies that are revolutionizing the design industry...</p>
+                <a href="#" class="blog-card__link" data-magnetic>Read More →</a>
+              </div>
+            </article>
+            <article class="blog-card glass-card" data-tilt data-animate="fade-up" data-delay="0.3">
+              <div class="blog-card__image skeleton-loader">
+                <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=80&auto=format"
+                     alt="Construction innovations" loading="lazy"
+                     onload="this.parentElement.classList.remove('skeleton-loader')" />
+                <span class="blog-card__date">Mar 15, 2026</span>
+              </div>
+              <div class="blog-card__content">
+                <span class="blog-card__tag">Innovation</span>
+                <h3 class="blog-card__title">Aerodynamic Racing: Future of Construction</h3>
+                <p class="blog-card__excerpt">Exploring how cutting-edge engineering is transforming the construction landscape...</p>
+                <a href="#" class="blog-card__link" data-magnetic>Read More →</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== CONTACT US SECTION ========== -->
+      <section class="contact section" id="contact" aria-label="Contact us">
+        <div class="container">
+          <div class="section__header" data-animate="fade-up">
+            <span class="section__tag">Get In Touch</span>
+            <h2 class="section__title" data-splitting>Contact <span class="text-accent">Us</span></h2>
+            <p class="section__desc">Have a question or project idea? Send us a message and we'll get back to you within 24 hours.</p>
+          </div>
+          <div class="contact__wrapper">
+            <div class="contact__info" data-animate="fade-right">
+              <div class="contact__info-card glass-card">
+                <div class="contact__info-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <h4>Our Office</h4>
+                <p>123 Business Ave, Suite 100<br>New York, NY 10001</p>
+              </div>
+              <div class="contact__info-card glass-card">
+                <div class="contact__info-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <h4>Email Us</h4>
+                <p>hello@agstudio.com<br>support@agstudio.com</p>
+              </div>
+              <div class="contact__info-card glass-card">
+                <div class="contact__info-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                </div>
+                <h4>Call Us</h4>
+                <p>+1 (555) 123-4567<br>Mon - Fri, 9am - 6pm</p>
+              </div>
+            </div>
+            <div class="contact__form-wrap glass-card" data-animate="fade-left">
+              <form class="contact__form" id="contactForm" aria-label="Contact form">
+                <div class="contact__form-group">
+                  <label for="contactName" class="contact__label">Name</label>
+                  <input type="text" id="contactName" class="contact__input" placeholder="Your full name" required minlength="2" />
+                </div>
+                <div class="contact__form-group">
+                  <label for="contactEmail" class="contact__label">Email</label>
+                  <input type="email" id="contactEmail" class="contact__input" placeholder="you@example.com" required />
+                </div>
+                <div class="contact__form-group">
+                  <label for="contactMessage" class="contact__label">Message</label>
+                  <textarea id="contactMessage" class="contact__input contact__textarea" placeholder="Write your message here..." required minlength="10" rows="5"></textarea>
+                </div>
+                <p class="contact__status" id="contactStatus"></p>
+                <button type="submit" class="btn btn--primary btn--full contact__submit" id="contactSubmitBtn" data-magnetic>
+                  <span class="btn__text">Send Message</span>
+                  <span class="btn__ripple"></span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== FOOTER ========== -->
+      <footer class="footer" id="footer" role="contentinfo" aria-label="Footer">
+        <div class="footer__top">
+          <div class="container">
+            <div class="footer__grid">
+              <div class="footer__brand" data-animate="fade-up">
+                <a href="#hero" class="footer__logo">
+                  <span class="footer__logo-mark">◆</span>
+                  <span class="footer__logo-text">AG<span class="footer__logo-accent">Studio</span></span>
+                </a>
+                <p class="footer__tagline">Crafting premium digital experiences that push the boundaries of innovation and design excellence.</p>
+                <div class="footer__socials">
+                  <a href="#" class="footer__social" aria-label="Facebook" data-magnetic>Fb</a>
+                  <a href="#" class="footer__social" aria-label="Twitter" data-magnetic>𝕏</a>
+                  <a href="#" class="footer__social" aria-label="Instagram" data-magnetic>Ig</a>
+                  <a href="#" class="footer__social" aria-label="LinkedIn" data-magnetic>In</a>
+                </div>
+              </div>
+              <div class="footer__col" data-animate="fade-up" data-delay="0.1">
+                <h4 class="footer__heading">Quick Links</h4>
+                <ul class="footer__links">
+                  <li><a href="#about" class="footer__link">About Us</a></li>
+                  <li><a href="#services" class="footer__link">Services</a></li>
+                  <li><a href="#projects" class="footer__link">Projects</a></li>
+                  <li><a href="#blog" class="footer__link">Blog</a></li>
+                  <li><a href="#" class="footer__link">Careers</a></li>
+                </ul>
+              </div>
+              <div class="footer__col" data-animate="fade-up" data-delay="0.2">
+                <h4 class="footer__heading">Services</h4>
+                <ul class="footer__links">
+                  <li><a href="#" class="footer__link">Architecture</a></li>
+                  <li><a href="#" class="footer__link">Interior Design</a></li>
+                  <li><a href="#" class="footer__link">3D Visualization</a></li>
+                  <li><a href="#" class="footer__link">Consulting</a></li>
+                  <li><a href="#" class="footer__link">Project Mgmt</a></li>
+                </ul>
+              </div>
+              <div class="footer__col footer__newsletter" data-animate="fade-up" data-delay="0.3">
+                <h4 class="footer__heading">Newsletter</h4>
+                <p class="footer__newsletter-desc">Subscribe to get updates on our latest projects and insights.</p>
+                <form class="footer__form" aria-label="Newsletter signup">
+                  <div class="footer__form-group">
+                    <input type="email" placeholder="Your email address" class="footer__input" aria-label="Email address" required />
+                    <button type="submit" class="footer__submit" aria-label="Subscribe" data-magnetic>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer__bottom">
+          <div class="container">
+            <p>&copy; 2026 AG Studio. All rights reserved.</p>
+            <div class="footer__bottom-links">
+              <a href="#">Privacy Policy</a>
+              <a href="#">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+</div>
+
+  <!-- ==================== BACK TO TOP ==================== -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top" data-magnetic>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+  <!-- Splitting.js -->
+  <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+  <!-- Vanilla Tilt -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+  <!-- Vanta.js NET effect -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <!-- Lottie -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <!-- Main Script -->
+  <script src="script.js"></script>
+</body>
+</html>
