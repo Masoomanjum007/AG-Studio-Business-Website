@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In | AG Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/auth.css" />
+  </head>
+  <body>
+    <main class="auth-shell">
+      <section class="auth-card" aria-labelledby="signin-title">
+        <a class="brand" href="../index.html">
+          <span class="brand__dot"></span>
+          AG Studio
+        </a>
+        <h1 id="signin-title">Welcome back</h1>
+        <p class="sub">Sign in to access your dashboard.</p>
+
+        <form id="signinForm" class="form-grid" novalidate>
+          <div class="form-field">
+            <label for="signinEmail">Email</label>
+            <input
+              id="signinEmail"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+            />
+            <p class="field-error" data-error-for="signinEmail"></p>
+          </div>
+
+          <div class="form-field">
+            <label for="signinPassword">Password</label>
+            <input
+              id="signinPassword"
+              name="password"
+              type="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+            />
+            <p class="field-error" data-error-for="signinPassword"></p>
+          </div>
+
+          <button id="signinBtn" type="submit" class="auth-btn">Sign In</button>
+          <p id="signinAlert" class="alert" aria-live="polite"></p>
+        </form>
+
+        <p class="quick-link">
+          Create new account
+          <a href="./signup.html">Sign Up</a>
+        </p>
+      </section>
+    </main>
+
+    <script type="module" src="./signin.js"></script>
+  </body>
+</html>

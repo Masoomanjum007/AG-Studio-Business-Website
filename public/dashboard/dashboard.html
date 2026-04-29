@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | AG Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/auth.css" />
+  </head>
+  <body>
+    <main class="auth-shell">
+      <section class="auth-card dashboard-card" aria-labelledby="dashboard-title">
+        <a class="brand" href="../index.html">
+          <span class="brand__dot"></span>
+          AG Studio
+        </a>
+        <h1 id="dashboard-title">Dashboard</h1>
+        <p class="sub">Secure area for authenticated users.</p>
+
+        <div class="dashboard-grid">
+          <div class="dash-item">
+            <span>Welcome</span>
+            <strong id="welcomeName">Loading...</strong>
+          </div>
+          <div class="dash-item">
+            <span>Email</span>
+            <strong id="userEmail">Loading...</strong>
+          </div>
+          <div class="dash-item">
+            <span>Status</span>
+            <strong>Authenticated Session Active</strong>
+          </div>
+        </div>
+
+        <div class="dash-actions">
+          <a class="ghost-btn" href="../index.html">Back to Home</a>
+          <button id="logoutBtn" class="auth-btn" type="button">Log Out</button>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./dashboard.js"></script>
+  </body>
+</html>

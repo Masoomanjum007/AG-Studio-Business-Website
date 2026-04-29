@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up | AG Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/auth.css" />
+  </head>
+  <body>
+    <main class="auth-shell">
+      <section class="auth-card" aria-labelledby="signup-title">
+        <a class="brand" href="../index.html">
+          <span class="brand__dot"></span>
+          AG Studio
+        </a>
+        <h1 id="signup-title">Create your account</h1>
+        <p class="sub">Join to access your secure dashboard.</p>
+
+        <form id="signupForm" class="form-grid" novalidate>
+          <div class="form-field">
+            <label for="signupEmail">Email</label>
+            <input
+              id="signupEmail"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+            />
+            <p class="field-error" data-error-for="signupEmail"></p>
+          </div>
+
+          <div class="form-field">
+            <label for="signupPassword">Password</label>
+            <input
+              id="signupPassword"
+              name="password"
+              type="password"
+              placeholder="At least 6 characters"
+              autocomplete="new-password"
+            />
+            <p class="field-error" data-error-for="signupPassword"></p>
+          </div>
+
+          <button id="signupBtn" type="submit" class="auth-btn">Sign Up</button>
+          <p id="signupAlert" class="alert" aria-live="polite"></p>
+        </form>
+
+        <p class="quick-link">
+          Already have an account?
+          <a href="./signin.html">Sign In</a>
+        </p>
+      </section>
+    </main>
+
+    <script type="module" src="./signup.js"></script>
+  </body>
+</html>

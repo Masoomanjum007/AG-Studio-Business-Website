@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "site": "ag-studio-c8d03",
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
