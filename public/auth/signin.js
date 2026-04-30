@@ -9,6 +9,11 @@ const passwordInput = document.getElementById("signinPassword");
 
 document.body.classList.add("page-enter");
 
+if (window.location.protocol === "file:") {
+  signinAlert.textContent = "Run this app on localhost (not file://) for Firebase Authentication to work.";
+  signinAlert.classList.add("alert--error");
+}
+
 watchAuthState((user) => {
   if (user) {
     window.location.replace("../dashboard/dashboard.html");

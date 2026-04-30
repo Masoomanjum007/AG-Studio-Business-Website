@@ -1,6 +1,7 @@
 import {
   browserLocalPersistence,
   createUserWithEmailAndPassword,
+  inMemoryPersistence,
   onAuthStateChanged,
   setPersistence,
   signInWithEmailAndPassword,
@@ -12,7 +13,9 @@ let persistenceReady;
 
 async function ensurePersistence() {
   if (!persistenceReady) {
-    persistenceReady = setPersistence(auth, browserLocalPersistence);
+    persistenceReady = setPersistence(auth, browserLocalPersistence).catch(() =>
+      setPersistence(auth, inMemoryPersistence)
+    );
   }
   return persistenceReady;
 }
@@ -56,6 +59,12 @@ export function getAuthErrorMessage(errorCode = "") {
       return "Too many attempts. Try again later.";
     case "auth/network-request-failed":
       return "Network error. Check your internet connection.";
+    case "auth/operation-not-allowed":
+      return "Email/password sign-in is disabled in Firebase. Enable it in Authentication settings.";
+    case "auth/invalid-api-key":
+      return "Firebase API key is invalid. Check your Firebase config.";
+    case "auth/unauthorized-domain":
+      return "This domain is not authorized in Firebase. Add it in Authentication settings.";
     default:
       return "Something went wrong. Please try again.";
   }

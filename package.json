@@ -1,0 +1,26 @@
+{
+  "name": "business-website-ag",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve public -l 5000",
+    "dev": "serve public -l 5000",
+    "test": "echo \"No tests configured\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Masoomanjum007/AG-Studio-Business-Website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Masoomanjum007/AG-Studio-Business-Website/issues"
+  },
+  "homepage": "https://github.com/Masoomanjum007/AG-Studio-Business-Website#readme",
+  "dependencies": {
+    "serve": "^14.2.6"
+  }
+}

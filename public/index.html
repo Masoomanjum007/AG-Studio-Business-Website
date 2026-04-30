@@ -71,6 +71,7 @@
       </ul>
 
       <div class="nav__actions">
+        <a class="btn btn--outline nav__account-link" id="accountLink" href="./auth/signin.html">Sign In</a>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" data-magnetic>
           <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
@@ -779,24 +780,6 @@
 
   <!-- Main Script -->
   <script src="script.js" defer></script>
-  <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyArsu6k_zFFoXBCy3oCdi21MF-j3pZBHg0",
-    authDomain: "ag-studio-c8d03.firebaseapp.com",
-    projectId: "ag-studio-c8d03",
-    storageBucket: "ag-studio-c8d03.firebasestorage.app",
-    messagingSenderId: "449205566213",
-    appId: "1:449205566213:web:f268cde759f4e5509e156c"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-</script>
+  <script type="module" src="./services/session-link.js"></script>
 </body>
 </html>
