@@ -27,11 +27,90 @@ window.addEventListener("load", () => {
   }, 35);
 });
 
+function initCustomCursor() {
+  const cursor = document.getElementById("cursor");
+  const trail = document.getElementById("cursorTrail");
+  if (!cursor || !trail) return;
+
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
+  if (reducedMotion || coarsePointer) {
+    document.body.classList.remove("custom-cursor-enabled");
+    return;
+  }
+
+  document.body.classList.add("custom-cursor-enabled");
+
+  const magneticTargets = Array.from(document.querySelectorAll("[data-magnetic]"));
+  const hoverTargets = Array.from(document.querySelectorAll("a, button, input, textarea, select, [role='button']"));
+  let pointerX = window.innerWidth / 2;
+  let pointerY = window.innerHeight / 2;
+  let cursorX = pointerX;
+  let cursorY = pointerY;
+  let trailX = pointerX;
+  let trailY = pointerY;
+  let magneticTarget = null;
+
+  const updatePosition = () => {
+    cursorX += (pointerX - cursorX) * 0.22;
+    cursorY += (pointerY - cursorY) * 0.22;
+    trailX += (pointerX - trailX) * 0.11;
+    trailY += (pointerY - trailY) * 0.11;
+
+    cursor.style.transform = `translate3d(${cursorX - 16}px, ${cursorY - 16}px, 0)`;
+    trail.style.transform = `translate3d(${trailX - 3}px, ${trailY - 3}px, 0)`;
+    requestAnimationFrame(updatePosition);
+  };
+  requestAnimationFrame(updatePosition);
+
+  document.addEventListener("mousemove", (event) => {
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+
+    if (!magneticTarget) return;
+    const bounds = magneticTarget.getBoundingClientRect();
+    const centerX = bounds.left + bounds.width / 2;
+    const centerY = bounds.top + bounds.height / 2;
+    const deltaX = (event.clientX - centerX) * 0.2;
+    const deltaY = (event.clientY - centerY) * 0.2;
+    magneticTarget.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0)`;
+  });
+
+  magneticTargets.forEach((el) => {
+    el.addEventListener("mouseenter", () => {
+      magneticTarget = el;
+      cursor.classList.add("cursor--magnetic");
+    });
+    el.addEventListener("mouseleave", () => {
+      magneticTarget = null;
+      el.style.transform = "translate3d(0, 0, 0)";
+      cursor.classList.remove("cursor--magnetic");
+    });
+  });
+
+  hoverTargets.forEach((el) => {
+    el.addEventListener("mouseenter", () => cursor.classList.add("cursor--hover"));
+    el.addEventListener("mouseleave", () => cursor.classList.remove("cursor--hover"));
+  });
+
+  document.addEventListener("mousedown", () => cursor.classList.add("cursor--click"));
+  document.addEventListener("mouseup", () => cursor.classList.remove("cursor--click"));
+  document.addEventListener("mouseleave", () => {
+    cursor.style.opacity = "0";
+    trail.style.opacity = "0";
+  });
+  document.addEventListener("mouseenter", () => {
+    cursor.style.opacity = "1";
+    trail.style.opacity = "";
+  });
+}
+
 // Theme toggle with persistence.
 const themeToggle = document.getElementById("themeToggle");
 const root = document.documentElement;
 const savedTheme = localStorage.getItem("ag-theme");
 if (savedTheme) root.setAttribute("data-theme", savedTheme);
+initCustomCursor();
 
 themeToggle?.addEventListener("click", () => {
   const current = root.getAttribute("data-theme") === "light" ? "dark" : "light";

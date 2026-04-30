@@ -116,20 +116,20 @@ body {
   color: var(--text-primary);
   background-color: var(--bg-primary);
   overflow-x: hidden;
-  cursor: none;
+  cursor: auto;
   transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 a {
   text-decoration: none;
   color: inherit;
-  cursor: none;
+  cursor: pointer;
 }
 
 button {
   border: none;
   background: none;
-  cursor: none;
+  cursor: pointer;
   font-family: inherit;
 }
 
@@ -351,6 +351,19 @@ ul {
   width: 8px;
   height: 8px;
   box-shadow: 0 0 12px var(--accent-glow);
+}
+
+body.custom-cursor-enabled {
+  cursor: none;
+}
+
+body.custom-cursor-enabled a,
+body.custom-cursor-enabled button,
+body.custom-cursor-enabled input,
+body.custom-cursor-enabled textarea,
+body.custom-cursor-enabled select,
+body.custom-cursor-enabled [role="button"] {
+  cursor: none;
 }
 
 /* Stable compositing layer for magnetic GSAP transforms */
@@ -1835,7 +1848,7 @@ ul {
   border-radius: var(--radius-md);
   outline: none;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  cursor: none;
+  cursor: text;
 }
 
 .contact__input::placeholder {
